@@ -50,6 +50,7 @@ func (c *Client) GetStory(ctx context.Context,
 
 	q := req.URL.Query()
 	q.Add("token", c.token)
+	req.URL.RawQuery = q.Encode()
 
 	res := StoryResponse{}
 	if err := c.sendRequest(req, &res); err != nil {

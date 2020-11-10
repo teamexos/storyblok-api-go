@@ -38,14 +38,14 @@ type (
 
 	// GetStoryInput defines the valid input parameters for GetStory
 	GetStoryInput struct {
-		FindBy           string `url:"find_by"`
-		Version          string `url:"version"`
-		ResolveLinks     string `url:"find_by"`
-		ResolveRelations string `url:"resolve_relations"`
-		FromRelease      int    `url:"from_release"`
-		CV               string `url:"cv"`
-		Language         string `url:"language"`
-		FallbackLang     string `url:"fallback_lang"`
+		FindBy           string `url:"find_by,omitempty"`
+		Version          string `url:"version,omitempty"`
+		ResolveLinks     string `url:"find_by,omitempty"`
+		ResolveRelations string `url:"resolve_relations,omitempty"`
+		FromRelease      int    `url:"from_release,omitempty"`
+		CV               string `url:"cv,omitempty"`
+		Language         string `url:"language,omitempty"`
+		FallbackLang     string `url:"fallback_lang,omitempty"`
 	}
 
 	// StoryResponse represents the structured reponse from Storyblok
