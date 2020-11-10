@@ -10,7 +10,7 @@ import (
 type StoryInput struct {
 	FindBy           string `url:"find_by,omitempty"`
 	Version          string `url:"version,omitempty"`
-	ResolveLinks     string `url:"find_by,omitempty"`
+	ResolveLinks     string `url:"resolve_links,omitempty"`
 	ResolveRelations string `url:"resolve_relations,omitempty"`
 	FromRelease      int    `url:"from_release,omitempty"`
 	CV               string `url:"cv,omitempty"`
