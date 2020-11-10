@@ -43,7 +43,7 @@ func (c *Client) GetStory(ctx context.Context,
 	if input != nil {
 		q, err := input.QueryParams()
 		if err != nil {
-			return nil, NewResponseError(http.StatusInternalServerError, errCodeRequestSetupFailed)
+			return nil, NewResponseError(http.StatusUnprocessableEntity, err.Error())
 		}
 		req.URL.RawQuery = q.Encode()
 	}
