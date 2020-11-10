@@ -1,13 +1,6 @@
 package storyblok
 
 type (
-	// Stories represents the structured response from Storyblok
-	// for multiple stories
-	// https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/the-story-object
-	Stories struct {
-		Stories []Story `json:"stories"`
-	}
-
 	// Story is a struct representation of the main story object
 	Story struct {
 		ID               int                    `json:"id"`

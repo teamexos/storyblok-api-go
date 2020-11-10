@@ -23,20 +23,6 @@ func init() {
 	storyblockClient = storyblok.NewClient(httpClient, "access_token")
 }
 
-func TestGetStories(t *testing.T) {
-	mocks.GetDoFunc = func(*http.Request) (*http.Response, error) {
-		return &http.Response{
-			StatusCode: http.StatusOK,
-			Body:       fixtures.ResponseGetStories(),
-		}, nil
-	}
-
-	stories, err := storyblockClient.GetStories(ctx)
-
-	assert.Nil(t, err)
-	assert.NotNil(t, stories.Stories)
-}
-
 func TestGetStory(t *testing.T) {
 	mocks.GetDoFunc = func(*http.Request) (*http.Response, error) {
 		return &http.Response{

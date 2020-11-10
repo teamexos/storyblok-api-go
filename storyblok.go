@@ -59,38 +59,6 @@ func (c *Client) GetStory(ctx context.Context,
 	return &res, nil
 }
 
-// GetStories returns a list of stories that are in your Storyblok space.
-// The stories are returned in sorted order, depending on the order in
-// your space. You can use the query parameter sort_by with any story
-// object property and first level of your content type to order the
-// response to your needs.
-//
-// If no entries are found with your filters applied, you will receive
-//an empty array. You will not receive a 404 error message, to check
-// if you have results go for the array length.
-//
-// https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-multiple-stories
-func (c *Client) GetStories(ctx context.Context,
-	params ...string) (*Stories, *ResponseError) {
-
-	paramsStr := fmt.Sprintf("?token=%s&", c.token)
-	endpoint := fmt.Sprintf("%s/stories%s",
-		c.baseURL,
-		paramsStr)
-
-	req, err := http.NewRequestWithContext(ctx, "GET", endpoint, nil)
-	if err != nil {
-		return nil, NewResponseError(http.StatusInternalServerError, errCodeRequestSetupFailed)
-	}
-
-	res := Stories{}
-	if err := c.sendRequest(req, &res); err != nil {
-		return nil, err
-	}
-
-	return &res, nil
-}
-
 func (c *Client) sendRequest(req *http.Request, v interface{}) *ResponseError {
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json; charset=utf-8")
