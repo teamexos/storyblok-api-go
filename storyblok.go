@@ -96,14 +96,11 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) *ResponseError {
 	defer res.Body.Close()
 
 	if res.StatusCode != http.StatusOK {
-		msg := storyblokError{}
 		buf := new(bytes.Buffer)
 		buf.ReadFrom(res.Body)
+		err := buf.String()
 
-		if err := json.Unmarshal([]byte(buf.String()), &msg); err != nil {
-			msg.Error = "could not unmarshal response"
-		}
-		return NewResponseError(res.StatusCode, msg.Error)
+		return NewResponseError(res.StatusCode, err)
 	}
 
 	if err = json.NewDecoder(res.Body).Decode(&v); err != nil {

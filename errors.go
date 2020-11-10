@@ -14,10 +14,6 @@ type (
 		StatusCode int
 		Message    string
 	}
-
-	storyblokError struct {
-		Error string `json:"error"`
-	}
 )
 
 func (e *ResponseError) Error() string {
