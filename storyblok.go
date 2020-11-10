@@ -32,18 +32,24 @@ func NewClient(httpClient HTTPClient, token string) *Client {
 // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
 func (c *Client) GetStory(ctx context.Context,
 	id string,
-	params ...string) (*StoryResponse, *ResponseError) {
+	input *GetStoryInput) (*StoryResponse, *ResponseError) {
 
-	paramsStr := fmt.Sprintf("?token=%s&", c.token)
-	endpoint := fmt.Sprintf("%s/stories/%s%s",
-		c.baseURL,
-		id,
-		paramsStr)
-
+	endpoint := fmt.Sprintf("%s/stories/%s", c.baseURL, id)
 	req, err := http.NewRequestWithContext(ctx, "GET", endpoint, nil)
 	if err != nil {
 		return nil, NewResponseError(http.StatusInternalServerError, errCodeRequestSetupFailed)
 	}
+
+	if input != nil {
+		q, err := input.QueryParams()
+		if err != nil {
+			return nil, NewResponseError(http.StatusInternalServerError, errCodeRequestSetupFailed)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+
+	q := req.URL.Query()
+	q.Add("token", c.token)
 
 	res := StoryResponse{}
 	if err := c.sendRequest(req, &res); err != nil {

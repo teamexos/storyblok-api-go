@@ -1,5 +1,11 @@
 package storyblok
 
+import (
+	"net/url"
+
+	"github.com/google/go-querystring/query"
+)
+
 type (
 	// Stories represents the structured response from Storyblok
 	// for multiple stories
@@ -30,6 +36,18 @@ type (
 		TranslatedSlugs  []*TranslatedSlug      `json:"translated_slugs"`
 	}
 
+	// GetStoryInput defines the valid input parameters for GetStory
+	GetStoryInput struct {
+		FindBy           string `url:"find_by"`
+		Version          string `url:"version"`
+		ResolveLinks     string `url:"find_by"`
+		ResolveRelations string `url:"resolve_relations"`
+		FromRelease      int    `url:"from_release"`
+		CV               string `url:"cv"`
+		Language         string `url:"language"`
+		FallbackLang     string `url:"fallback_lang"`
+	}
+
 	// StoryResponse represents the structured reponse from Storyblok
 	// for a single story
 	// https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/the-story-object
@@ -37,3 +55,13 @@ type (
 		Story Story `json:"story"`
 	}
 )
+
+// QueryParams returns a GetStoryInput struct as a query param string
+func (i GetStoryInput) QueryParams() (url.Values, error) {
+	v, err := query.Values(i)
+	if err != nil {
+		return nil, err
+	}
+
+	return v, nil
+}

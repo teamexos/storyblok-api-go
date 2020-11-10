@@ -45,7 +45,7 @@ func TestGetStory(t *testing.T) {
 		}, nil
 	}
 
-	story, err := storyblockClient.GetStory(ctx, "/fake/slug")
+	story, err := storyblockClient.GetStory(ctx, "/fake/slug", nil)
 
 	assert.Nil(t, err)
 	assert.NotNil(t, story.Story)
@@ -61,7 +61,7 @@ func TestStoryNotFound(t *testing.T) {
 		}, nil
 	}
 
-	_, err := storyblockClient.GetStory(ctx, "/fake/slug")
+	_, err := storyblockClient.GetStory(ctx, "/fake/slug", nil)
 
 	assert.NotNil(t, err)
 	assert.EqualValues(t, err.StatusCode, http.StatusNotFound)
@@ -76,7 +76,7 @@ func TestUnauthorized(t *testing.T) {
 		}, nil
 	}
 
-	_, err := storyblockClient.GetStory(ctx, "/fake/slug")
+	_, err := storyblockClient.GetStory(ctx, "/fake/slug", nil)
 
 	assert.NotNil(t, err)
 	assert.EqualValues(t, err.StatusCode, http.StatusUnauthorized)
