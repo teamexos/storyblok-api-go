@@ -11,11 +11,33 @@ go get -u github.com/teamexos/storyblok-api-go
 ## Usage
 
 ```go
-import "github.com/teamexos/storyblok-api-go"
+package main
 
-// Replace TOKEN with your real API token
-httpClient := storyblok.DefaultHTTPClient()
-storyblokClient := storyblok.NewClient(httpClient, "TOKEN")
+import (
+	"context"
+	"log"
+
+	"github.com/davecgh/go-spew/spew"
+	storyblok "github.com/teamexos/storyblok-api-go"
+)
+
+func main() {
+	httpClient := storyblok.DefaultHTTPClient()
+	storyblokClient := storyblok.NewClient(httpClient, "TOKEN")
+	ctx := context.Background()
+
+	input := &storyblok.StoryInput{
+        // Put query params here
+        // See story_input.go for fields
+	}
+	story, err := storyblokClient.GetStory(ctx, "/content/slug", input)
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
+
+	spew.Dump(story.Story.Content)
+}
+
 ```
 
 ## Testing
