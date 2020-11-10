@@ -14,7 +14,6 @@ go get -u github.com/teamexos/storyblok-api-go
 import "github.com/teamexos/storyblok-api-go"
 
 // Replace TOKEN with your real API token
-
 httpClient := storyblok.DefaultHTTPClient()
 storyblokClient := storyblok.NewClient(httpClient, "TOKEN")
 ```
