@@ -32,7 +32,7 @@ func NewClient(httpClient HTTPClient, token string) *Client {
 // https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/retrieve-one-story
 func (c *Client) GetStory(ctx context.Context,
 	id string,
-	input *GetStoryInput) (*StoryResponse, *ResponseError) {
+	input *StoryInput) (*StoryResponse, *ResponseError) {
 
 	endpoint := fmt.Sprintf("%s/stories/%s", c.baseURL, id)
 	req, err := http.NewRequestWithContext(ctx, "GET", endpoint, nil)
