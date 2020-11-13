@@ -63,7 +63,7 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) *ResponseError {
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json; charset=utf-8")
 
-	res, err := c.httpClient.Do(req)
+	res, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return NewResponseError(http.StatusInternalServerError, errCodeRequestDoFailed)
 	}
