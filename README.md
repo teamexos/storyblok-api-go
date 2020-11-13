@@ -22,8 +22,7 @@ import (
 )
 
 func main() {
-	httpClient := storyblok.DefaultHTTPClient()
-	storyblokClient := storyblok.NewClient(httpClient, "TOKEN")
+	storyblokClient := storyblok.NewClient("TOKEN")
 	ctx := context.Background()
 
 	input := &storyblok.StoryInput{

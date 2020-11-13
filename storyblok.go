@@ -14,15 +14,15 @@ const baseURLv1 = "https://api.storyblok.com/v1/cdn"
 type Client struct {
 	baseURL    string
 	token      string
-	httpClient HTTPClient
+	HTTPClient HTTPClient
 }
 
 // NewClient returns a pointer to Client
-func NewClient(httpClient HTTPClient, token string) *Client {
+func NewClient(token string) *Client {
 	return &Client{
 		baseURL:    baseURLv1,
 		token:      token,
-		httpClient: httpClient,
+		HTTPClient: DefaultHTTPClient(),
 	}
 }
 
@@ -63,7 +63,7 @@ func (c *Client) sendRequest(req *http.Request, v interface{}) *ResponseError {
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json; charset=utf-8")
 
-	res, err := c.httpClient.Do(req)
+	res, err := c.HTTPClient.Do(req)
 	if err != nil {
 		return NewResponseError(http.StatusInternalServerError, errCodeRequestDoFailed)
 	}
