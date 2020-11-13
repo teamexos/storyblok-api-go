@@ -14,15 +14,15 @@ const baseURLv1 = "https://api.storyblok.com/v1/cdn"
 type Client struct {
 	baseURL    string
 	token      string
-	httpClient HTTPClient
+	HTTPClient HTTPClient
 }
 
 // NewClient returns a pointer to Client
-func NewClient(httpClient HTTPClient, token string) *Client {
+func NewClient(token string) *Client {
 	return &Client{
 		baseURL:    baseURLv1,
 		token:      token,
-		httpClient: httpClient,
+		HTTPClient: DefaultHTTPClient(),
 	}
 }
 
