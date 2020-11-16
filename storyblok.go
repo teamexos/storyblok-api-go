@@ -20,7 +20,6 @@ type Client struct {
 
 // NewClient returns a pointer to Client
 func NewClient(token string) *Client {
-	// get the latest cache version
 	client := &Client{
 		baseURL:      baseURLv1,
 		token:        token,
