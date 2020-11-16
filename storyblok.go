@@ -54,7 +54,6 @@ func (c *Client) GetLatestSpace(ctx context.Context) (*Space, *ResponseError) {
 	return &res.Space, nil
 }
 
-
 // GetStory returns a story object for the full_slug, id or uuid if
 // authenticated using a preview or public token.
 //
