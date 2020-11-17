@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strconv"
 )
 
 const baseURLv1 = "https://api.storyblok.com/v1/cdn"
@@ -25,6 +26,7 @@ func NewClient(token string) *Client {
 		token:        token,
 		HTTPClient:   DefaultHTTPClient(),
 	}
+
 	// Get the latest space version for all subsequent story calls
     space, err := client.GetLatestSpace(context.Background())
     if err == nil {
@@ -79,7 +81,7 @@ func (c *Client) GetStory(ctx context.Context,
 	q := req.URL.Query()
 	q.Add("token", c.token)
 	if c.SpaceVersion != 0 {
-		q.Add("cv", string(c.SpaceVersion))
+		q.Add("cv", strconv.Itoa(c.SpaceVersion))
 	}
 	req.URL.RawQuery = q.Encode()
 
