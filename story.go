@@ -25,7 +25,7 @@ type (
 		TranslatedSlugs  []*TranslatedSlug `json:"translated_slugs"`
 	}
 
-	// StoryResponse represents the structured reponse from Storyblok
+	// StoryResponse represents the structured response from Storyblok
 	// for a single story
 	// https://www.storyblok.com/docs/api/content-delivery#core-resources/stories/the-story-object
 	StoryResponse struct {
