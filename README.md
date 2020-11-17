@@ -22,7 +22,7 @@ import (
 )
 
 func main() {
-	storyblokClient := storyblok.NewClient("TOKEN")
+	storyblokClient := storyblok.NewClient(storyblok.ClientInput{Token: "TOKEN"})
 	ctx := context.Background()
 
 	input := &storyblok.StoryInput{
