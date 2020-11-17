@@ -90,7 +90,8 @@ func (c *Client) GetStory(ctx context.Context,
 
 	q := req.URL.Query()
 	q.Add("token", c.token)
-	q.Add("dt", strconv.Itoa(int(time.Now().Unix())))
+	// always add the current datetime as a param to prevent getting cached content
+	q.Add("refresher", strconv.Itoa(int(time.Now().Unix())))
 	if c.SpaceVersion != 0 {
 		q.Add("cv", strconv.Itoa(c.SpaceVersion))
 	}
