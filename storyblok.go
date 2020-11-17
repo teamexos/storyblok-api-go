@@ -12,25 +12,34 @@ import (
 const baseURLv1 = "https://api.storyblok.com/v1/cdn"
 
 // Client is the client struct used to access the Storyblok APIs
-type Client struct {
-	baseURL      string
-	token        string
-	SpaceVersion int
-	HTTPClient   HTTPClient
-}
-
-// NewClient returns a pointer to Client
-func NewClient(token string) *Client {
-	client := &Client{
-		baseURL:      baseURLv1,
-		token:        token,
-		HTTPClient:   DefaultHTTPClient(),
+type (
+	Client struct {
+		baseURL      string
+		token        string
+		SpaceVersion int
+		HTTPClient   HTTPClient
 	}
 
-	// Get the latest space version for all subsequent story calls
-    space, err := client.GetLatestSpace(context.Background())
-    if err == nil {
-		client.SpaceVersion = space.Version
+	ClientInput struct {
+		UseLatestSpace bool
+		Token          string
+	}
+)
+
+// NewClient returns a pointer to Client
+func NewClient(input ClientInput) *Client {
+	client := &Client{
+		baseURL:    baseURLv1,
+		token:      input.Token,
+		HTTPClient: DefaultHTTPClient(),
+	}
+
+	if input.UseLatestSpace {
+		// Get the latest space version and use it for all subsequent story calls
+		space, err := client.GetLatestSpace(context.Background())
+		if err == nil {
+			client.SpaceVersion = space.Version
+		}
 	}
 	return client
 }
@@ -95,6 +104,7 @@ func (c *Client) GetStory(ctx context.Context,
 func (c *Client) sendRequest(req *http.Request, v interface{}) *ResponseError {
 	req.Header.Set("Content-Type", "application/json; charset=utf-8")
 	req.Header.Set("Accept", "application/json; charset=utf-8")
+	req.Header.Add("cache-control", "no-cache")
 
 	res, err := c.HTTPClient.Do(req)
 	if err != nil {
