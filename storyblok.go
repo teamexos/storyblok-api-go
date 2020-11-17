@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 const baseURLv1 = "https://api.storyblok.com/v1/cdn"
@@ -89,6 +90,7 @@ func (c *Client) GetStory(ctx context.Context,
 
 	q := req.URL.Query()
 	q.Add("token", c.token)
+	q.Add("dt", strconv.Itoa(int(time.Now().Unix())))
 	if c.SpaceVersion != 0 {
 		q.Add("cv", strconv.Itoa(c.SpaceVersion))
 	}
