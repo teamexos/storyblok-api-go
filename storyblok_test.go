@@ -19,7 +19,7 @@ var (
 
 func init() {
 	ctx = context.Background()
-	storyblockClient = storyblok.NewClient("access_token")
+	storyblockClient = storyblok.NewClient(storyblok.ClientInput{Token: "access_token"})
 	storyblockClient.HTTPClient = &mocks.MockHTTPClient{}
 }
 
