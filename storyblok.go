@@ -16,13 +16,13 @@ type (
 	Client struct {
 		baseURL      string
 		token        string
-		SpaceVersion int
+		CacheVersion int
 		HTTPClient   HTTPClient
 	}
 
 	ClientInput struct {
-		UseLatestSpace bool
-		Token          string
+		CacheVersion int
+		Token        string
 	}
 )
 
@@ -31,15 +31,8 @@ func NewClient(input ClientInput) *Client {
 	client := &Client{
 		baseURL:    baseURLv1,
 		token:      input.Token,
+		CacheVersion: input.CacheVersion,
 		HTTPClient: DefaultHTTPClient(),
-	}
-
-	if input.UseLatestSpace {
-		// Get the latest space version and use it for all subsequent story calls
-		space, err := client.GetLatestSpace(context.Background())
-		if err == nil {
-			client.SpaceVersion = space.Version
-		}
 	}
 	return client
 }
@@ -89,10 +82,8 @@ func (c *Client) GetStory(ctx context.Context,
 
 	q := req.URL.Query()
 	q.Add("token", c.token)
-	// always add the current datetime as a param to prevent getting cached content
-	//q.Add("refresher", strconv.Itoa(int(time.Now().Unix())))
-	if c.SpaceVersion != 0 {
-		q.Add("cv", strconv.Itoa(c.SpaceVersion))
+	if c.CacheVersion != 0 {
+		q.Add("cv", strconv.Itoa(c.CacheVersion))
 	}
 	req.URL.RawQuery = q.Encode()
 
