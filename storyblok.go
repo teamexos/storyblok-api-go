@@ -28,13 +28,12 @@ type (
 
 // NewClient returns a pointer to Client
 func NewClient(input ClientInput) *Client {
-	client := &Client{
+	return &Client{
 		baseURL:    baseURLv1,
 		token:      input.Token,
 		CacheVersion: input.CacheVersion,
 		HTTPClient: DefaultHTTPClient(),
 	}
-	return client
 }
 
 // GetLatestSpace gets the latest space version so that we can always deliver the latest content
