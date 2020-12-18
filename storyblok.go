@@ -11,8 +11,8 @@ import (
 
 const baseURLv1 = "https://api.storyblok.com/v1/cdn"
 
-// Client is the client struct used to access the Storyblok APIs
 type (
+	// Client is the client struct used to access the Storyblok APIs
 	Client struct {
 		baseURL      string
 		token        string
@@ -20,6 +20,7 @@ type (
 		HTTPClient   HTTPClient
 	}
 
+	// ClientInput is the required input to create a client
 	ClientInput struct {
 		CacheVersion int
 		Token        string
@@ -29,10 +30,10 @@ type (
 // NewClient returns a pointer to Client
 func NewClient(input ClientInput) *Client {
 	return &Client{
-		baseURL:    baseURLv1,
-		token:      input.Token,
+		baseURL:      baseURLv1,
+		token:        input.Token,
 		CacheVersion: input.CacheVersion,
-		HTTPClient: DefaultHTTPClient(),
+		HTTPClient:   DefaultHTTPClient(),
 	}
 }
 
